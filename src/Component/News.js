@@ -19,13 +19,13 @@ export default class News extends Component {
     let url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=68476c07dc894b00a95fcc4af3fc5a8e&page=1&pageSize=${this.props.pageSize}`;
     let data = await fetch(url);
     let parseData = await data.json();
-    console.log("parseData----------->",JSON.stringify(parseData))
+    // console.log("parseData----------->",JSON.stringify(parseData))
     this.setState({
       articles : parseData.articles, 
       totalResults : parseData.totalResults,
       loding : false
     });
-    console.log("pageSize ----------->",this.props.pageSize);
+    // console.log("pageSize ----------->",this.props.pageSize);
   }
 
   handlerPreviousClick = async () => {
