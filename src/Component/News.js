@@ -9,7 +9,7 @@ export default class News extends Component {
     // console.log("Hello I am a constructor from news component");
     this.state = {
       articles: [],
-      loding : true,
+      loding : false,
       page : 1
     };
   }
