@@ -20,7 +20,7 @@ export default class News extends Component {
     // console.log("Hello I am a constructor from news component");
     this.state = {
       articles: [],
-      loding : false,
+      loding : true,
       page : 1
     };
     console.log("page------------------>", this.state.page);
@@ -63,7 +63,7 @@ export default class News extends Component {
 
   handlerPreviousClick = async () => { 
     if (!this.props.category) {
-      let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=d2e4a19327c64e4992b56bff699af093&page=${this.props.page - 1}&pageSize=${this.props.pageSize}`;
+      let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=d2e4a19327c64e4992b56bff699af093&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
       this.setState({loding : true})
       let data = await fetch(url);
       let parseData = await data.json();
@@ -76,7 +76,7 @@ export default class News extends Component {
       console.log("previous------------------------------------>", this.state.page - 1);
       console.log("totalResults-------------------------------->", this.state.totalResults);
     } else {
-      let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d2e4a19327c64e4992b56bff699af093&page=${this.props.page - 1}&pageSize=${this.props.pageSize}`;
+      let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d2e4a19327c64e4992b56bff699af093&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
       this.setState({loding : true})
       let data = await fetch(url);
       let parseData = await data.json();
@@ -93,8 +93,8 @@ export default class News extends Component {
 
   handlerNextClick = async () => {
     if (!this.props.category) {
-      if(!(this.state.page + 1 > Math.ceil(this.state.totalResults/this.props.pageSize))){  
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=d2e4a19327c64e4992b56bff699af093&page=${this.props.page + 1}&pageSize=${this.props.pageSize}`;
+      // if(!(this.state.page + 1 > Math.ceil(this.state.totalResults/this.props.pageSize))){  
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=d2e4a19327c64e4992b56bff699af093&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
         this.setState({loding : true})
         let data = await fetch(url);
         let parseData = await data.json();
@@ -105,11 +105,11 @@ export default class News extends Component {
           loding : false
         })
         console.log("next----------------------------------------->", this.state.page + 1);
-      console.log("totalResults-------------------------------->", this.state.totalResults);
-      }
+        console.log("totalResults-------------------------------->", this.state.totalResults);
+      // }
     } else {
-      if(!(this.state.page + 1 > Math.ceil(this.state.totalResults/this.props.pageSize))){  
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d2e4a19327c64e4992b56bff699af093&page=${this.props.page + 1}&pageSize=${this.props.pageSize}`;
+      // if(!(this.state.page + 1 > Math.ceil(this.state.totalResults/this.props.pageSize))){  
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d2e4a19327c64e4992b56bff699af093&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
         this.setState({loding : true})
         let data = await fetch(url);
         let parseData = await data.json();
@@ -120,8 +120,8 @@ export default class News extends Component {
           loding : false
         });
         console.log("next----------------------------------------->", this.state.page + 1);
-      console.log("totalResults-------------------------------->", this.state.totalResults);
-      }
+        console.log("totalResults-------------------------------->", this.state.totalResults);
+      // }
     }
   }
 
