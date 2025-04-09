@@ -53,23 +53,21 @@ export default class News extends Component {
     }
   }
   
-  async componentDidMount(){ 
-    this.setState({totalResults : this.state.totalResults});
+  async componentDidMount(){
     this.updateNews();
-    console.log("Page-------------------------------->", this.state.page);
   }
 
   handlerPreviousClick = () => {
     this.setState(
-      () => ({ page: this.state.page - 1 }),
-      () => this.updateNews()
+      () => ({page : this.state.page - 1}),
+      () => {this.updateNews()}
     );
   }
   
   handlerNextClick = () => {
     this.setState(
-      () => ({ page: this.state.page + 1 }),
-      () => this.updateNews()
+      () => ({page : this.state.page + 1}),
+      () => {this.updateNews()}
     );
   }
   
