@@ -3,6 +3,7 @@ import Newsitem from "./Newsitem";
 import SPINER from "./SPINER";
 import images from "./assets";
 import PropTypes from "prop-types";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default class News extends Component {
   static defaultProps = {
@@ -21,7 +22,8 @@ export default class News extends Component {
     this.state = {
       articles: [],
       loding : true,
-      page : 1
+      page : 1,
+      totalResults : 0
     };
     console.log("page------------------>", this.state.page);
     // console.log("PROPS----------->",JSON.stringify(this.props));    
@@ -78,20 +80,27 @@ export default class News extends Component {
         <h1 className="text-center" style={{margin : "25px"}}>This is a news Component</h1>
         <div className="container my-4">
           <h2>newsMoney - top headlines</h2>
-          {this.state.loding && <SPINER/>}
-          <div className="row container">
-            {!this.state.loding && this.state.articles.map((element) => {
-              return <div className="col-md-4" key={element.url}>
-                <Newsitem
-                  title={element.title ? element.title.slice(0,45) : "Bhavy"}
-                  description={element.description ? element.description.slice(0,85) : "Kunj"}
-                  imageUrl={!element.urlToImage ? images.dummy : element.urlToImage}
-                  newsUrl={element.url} 
-                  author={element.author}
-                  date={element.publishedAt} />
-              </div>
-            })}
-          </div>
+          {/* {this.state.loding && <SPINER/>} */}
+          <InfiniteScroll
+            dataLength={this.state.articles.length}
+            next={this.fetchMoreData}
+            hasMore={this.state.articles.length !== this.state.totalResults}
+            loader={<SPINER/>}
+          >
+            <div className="row container">
+              {!this.state.loding && this.state.articles.map((element) => {
+                return <div className="col-md-4" key={element.url}>
+                  <Newsitem
+                    title={element.title ? element.title.slice(0,45) : "Bhavy"}
+                    description={element.description ? element.description.slice(0,85) : "Kunj"}
+                    imageUrl={!element.urlToImage ? images.dummy : element.urlToImage}
+                    newsUrl={element.url} 
+                    author={element.author}
+                    date={element.publishedAt} />
+                </div>
+              })}
+            </div>
+          </InfiniteScroll>
           <div className="container d-flex justify-content-between">
             <button disabled={this.state.page <= 1} className="btn btn-primary" type="button" onClick={this.handlerPreviousClick}>&larr; Previous</button>
             <button disabled={this.state.page + 1 > Math.ceil(this.state.totalResults/this.props.pageSize)} className="btn btn-primary" type="button" onClick={this.handlerNextClick}>Next &rarr;</button>
